@@ -42,5 +42,6 @@ enum class OrderType(val displayName: String) {
 enum class TradeStatus(val displayName: String) {
     PENDING("주문"),
     FILLED("체결"),
-    CANCELED("취소")
+    CANCELED("취소"),
+    PARTIAL("부분 체결")
 }
