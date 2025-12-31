@@ -14,6 +14,7 @@ data class TradeHistoryResponse(
     val orderPrice: Double,
     val orderQuantity: Int,
     val orderTime: String,
+    val crashRate: Double? = null,
 
     // 체결 정보
     val tradeStatus: TradeStatus,
