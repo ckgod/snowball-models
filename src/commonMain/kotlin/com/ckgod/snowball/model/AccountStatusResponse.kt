@@ -3,15 +3,42 @@ package com.ckgod.snowball.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AccountStatusResponse(
-    val totalAssetValueUsd: Double,    // 총 자산(달러 환산)
-    val totalBuyingValueUsd: Double,   // 총 매입금(달러)
-    val totalEvalValueUsd: Double,     // 총 평가금(달러)
-    val totalProfitUsd: Double,        // 총 평가손익($)
-    val totalProfitRate: Double,       // 총 수익률(%)
-
-    val totalCashUsd: Double,          // 외화예수금
-    val orderableCashUsd: Double,      // 주문가능금액
-    val lockedCashUsd: Double,          // 묶인 돈(증거금)
-    val holdingStocks: List<HoldingStockResponse>
+data class TotalAssetResponse(
+    val assets: List<AssetItemResponse>,
+    val holdingStocks: List<HoldingStockResponse>,
+    val exchangeRate: Double = 1450.0
 )
+
+@Serializable
+data class AssetItemResponse(
+    val type: AssetType,
+    val purchaseAmount: Double,              // 매입금액
+    val evaluationAmount: Double,            // 평가금액
+    val evaluationProfitLoss: Double,        // 평가손익금액
+    val creditLoanAmount: Double,            // 신용대출금액
+    val realNetAssetAmount: Double,          // 실제순자산금액
+    val wholeWeightRate: Double              // 전체비중율
+)
+
+enum class AssetType(val label: String) {
+    STOCKS("주식"),
+    FUND_MMW("펀드/MMW"),
+    IMA("IMA"),
+    BONDS("채권"),
+    ELS_DLS("ELS/DLS"),
+    WRAP("WRAP"),
+    TRUST("신탁"),
+    RP_PROMISSORY_NOTE("RP/발행어음"),
+    OVERSEAS_STOCKS("해외주식"),
+    OVERSEAS_BONDS("해외채권"),
+    GOLD_SPOT("금현물"),
+    CD_CP("CD/CP"),
+    ELECTRONIC_SHORT_TERM_BOND("전자단기사채"),
+    OTHER_COMPANY_PRODUCT("타사상품"),
+    FOREIGN_ELECTRONIC_SHORT_TERM_BOND("외화전자단기사채"),
+    FOREIGN_ELS_DLS("외화 ELS/DLS"),
+    FOREIGN_CURRENCY("외화"),
+    DEPOSIT("예수금"),
+    SUBSCRIPTION_DEPOSIT("청약자예수금"),
+    TOTAL("합계")
+}
