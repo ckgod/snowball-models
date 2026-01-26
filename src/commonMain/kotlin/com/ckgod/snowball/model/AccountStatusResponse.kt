@@ -42,3 +42,47 @@ enum class AssetType(val label: String) {
     SUBSCRIPTION_DEPOSIT("청약자예수금"),
     TOTAL("합계")
 }
+
+// TotalAssetResponse 확장 프로퍼티
+val TotalAssetResponse.totalAsset: AssetItemResponse?
+    get() = assets.find { it.type == AssetType.TOTAL }
+
+val TotalAssetResponse.overseasStocksAsset: AssetItemResponse?
+    get() = assets.find { it.type == AssetType.OVERSEAS_STOCKS }
+
+val TotalAssetResponse.foreignCurrencyAsset: AssetItemResponse?
+    get() = assets.find { it.type == AssetType.FOREIGN_CURRENCY }
+
+val TotalAssetResponse.rpPromissoryNoteAsset: AssetItemResponse?
+    get() = assets.find { it.type == AssetType.RP_PROMISSORY_NOTE }
+
+/** 총 자산 평가금액 (USD) */
+val TotalAssetResponse.totalAssetValueUsd: Double
+    get() = totalAsset?.realNetAssetAmount ?: 0.0
+
+/** 총 매입금액 (USD) */
+val TotalAssetResponse.totalBuyingValueUsd: Double
+    get() = totalAsset?.purchaseAmount ?: 0.0
+
+/** 해외주식 평가금액 (USD) */
+val TotalAssetResponse.totalEvalValueUsd: Double
+    get() = overseasStocksAsset?.evaluationAmount ?: 0.0
+
+/** 총 평가손익 (USD) */
+val TotalAssetResponse.totalProfitUsd: Double
+    get() = totalAsset?.evaluationProfitLoss ?: 0.0
+
+/** 총 수익률 (%) */
+val TotalAssetResponse.totalProfitRate: Double
+    get() {
+        val purchase = totalBuyingValueUsd
+        return if (purchase > 0) (totalProfitUsd / purchase) * 100 else 0.0
+    }
+
+/** 주문가능 현금 (외화) */
+val TotalAssetResponse.orderableCashUsd: Double
+    get() = foreignCurrencyAsset?.evaluationAmount ?: 0.0
+
+/** RP/발행어음 금액 */
+val TotalAssetResponse.rpAmountUsd: Double
+    get() = rpPromissoryNoteAsset?.evaluationAmount ?: 0.0
