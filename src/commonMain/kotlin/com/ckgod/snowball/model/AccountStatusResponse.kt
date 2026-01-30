@@ -86,3 +86,11 @@ val TotalAssetResponse.orderableCashUsd: Double
 /** RP/발행어음 금액 */
 val TotalAssetResponse.rpAmountUsd: Double
     get() = rpPromissoryNoteAsset?.evaluationAmount ?: 0.0
+
+/** 해외주식 손익금액 (USD) */
+val TotalAssetResponse.totalStockProfitUsd: Double
+    get() = overseasStocksAsset?.evaluationProfitLoss ?: 0.0
+
+/** RP 손익금액 (USD) */
+val TotalAssetResponse.totalRPProfitUsd: Double
+    get() = rpPromissoryNoteAsset?.evaluationProfitLoss ?: 0.0
