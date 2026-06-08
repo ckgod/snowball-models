@@ -8,6 +8,7 @@ data class InvestmentStatusResponse(
     val fullName: String? = null,                 // 종목 풀네임
     val currentPrice: Double = 0.0,              // 현재가
     val dailyChangeRate: Double = 0.0,           // 전일 대비 등락률 (%)
+    val isDayMarket: Boolean = false,            // 현재가가 주간거래(데이마켓) 시세 기준인지 여부
 
     // 전략 상태
     val tValue: Double = 0.0,                    // 현재 T값
