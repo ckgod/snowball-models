@@ -21,6 +21,8 @@ data class TradeHistoryResponse(
     val filledQuantity: Int,
     val filledPrice: Double,
     val filledTime: String?,
+    // 주문이 접수되지 못한 경우(REJECTED)의 사유. 구버전 응답과 호환되도록 기본값 null
+    val failReason: String? = null,
 
     // 전략 정보
     val tValue: Double,
@@ -44,5 +46,6 @@ enum class TradeStatus(val displayName: String) {
     PENDING("주문"),
     FILLED("체결"),
     CANCELED("취소"),
-    PARTIAL("부분 체결")
+    PARTIAL("부분 체결"),
+    REJECTED("거부")
 }
