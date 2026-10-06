@@ -43,3 +43,20 @@ data class OrderActionResponse(
     val message: String,
     val newOrderNo: String? = null
 )
+
+/**
+ * 수동 신규 주문.
+ *
+ * KIS 미국 주문 유형: 매수 LIMIT·LOO·LOC / 매도 LIMIT·MOO·LOO·MOC·LOC.
+ * MOO·MOC 는 시장가라 price 를 보내지 않는다 (0).
+ * exchange 를 생략하면 서버가 종목으로 추정한다 (NASD/NYSE/AMEX).
+ */
+@Serializable
+data class PlaceOrderRequest(
+    val ticker: String,
+    val orderSide: OrderSide,
+    val orderType: OrderType,
+    val price: Double = 0.0,
+    val quantity: Int,
+    val exchange: String? = null
+)

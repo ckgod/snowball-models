@@ -23,6 +23,8 @@ data class TradeHistoryResponse(
     val filledTime: String?,
     // 주문이 접수되지 못한 경우(REJECTED)의 사유. 구버전 응답과 호환되도록 기본값 null
     val failReason: String? = null,
+    // 앱에서 직접 넣은 주문이면 true (자동매매 주문과 구분). 구버전 호환을 위해 기본값 false
+    val isManual: Boolean = false,
 
     // 전략 정보
     val tValue: Double,
@@ -39,7 +41,9 @@ enum class OrderSide(val displayName: String) {
 enum class OrderType(val displayName: String) {
     LOC("LOC"),
     LIMIT("지정가"),
-    MOC("MOC")
+    MOC("MOC"),
+    LOO("LOO"),
+    MOO("MOO")
 }
 
 enum class TradeStatus(val displayName: String) {
